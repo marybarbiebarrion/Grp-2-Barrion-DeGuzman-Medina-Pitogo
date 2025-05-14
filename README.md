@@ -27,8 +27,8 @@ docker-compose up --build
 
 ### Access the Application
 
-Frontend (Web Interface): [http://localhost:8080](http://localhost:8080)
-Backend (Flask API): [http://localhost:5000](http://localhost:5000)
+- Frontend (Web Interface): [http://localhost:8080](http://localhost:8080)
+- Backend (Flask API): [http://localhost:5000](http://localhost:5000)
 
 ---
 
