@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>To-Do App</title>
+  <style>
+    body { font-family: sans-serif; padding: 30px; max-width: 700px; margin: auto; }
+    input, select, button { margin: 5px; padding: 8px; }
+    .task { padding: 10px; margin: 5px 0; border: 1px solid #ccc; }
+    .completed { text-decoration: line-through; background: #e0ffe0; }
+  </style>
+</head>
+<body>
+  <h1>My To-Do List</h1>
+  <input type="text" id="taskText" placeholder="Task" />
+  <input type="date" id="taskDate" />
+  <select id="taskCategory">
+    <option value="Work">Work</option>
+    <option value="Home">Home</option>
+    <option value="Study">Study</option>
+  </select>
+  <button onclick="addTask()">Add</button>
+  <div id="taskList"></div>
+
+<script>
+  const API_URL = "http://localhost:5000/tasks";
+
+  async function loadTasks() {
+    const res = await fetch(API_URL);
+    const tasks = await res.json();
+    const list = document.getElementById('taskList');
+    list.innerHTML = '';
+    tasks.forEach(t => {
+      const div = document.createElement('div');
+      div.className = 'task' + (t.completed ? ' completed' : '');
+      div.innerHTML = `
+        <strong>${t.text}</strong><br/>
+        ${t.category || ''} | Due: ${t.dueDate || 'None'}
+        <br/>
+        <button onclick="toggle(${t.id})">Done</button>
+        <button onclick="remove(${t.id})">Delete</button>
+      `;
+      list.appendChild(div);
+    });
+  }
+
+  async function addTask() {
+    const text = document.getElementById('taskText').value;
+    const dueDate = document.getElementById('taskDate').value;
+    const category = document.getElementById('taskCategory').value;
+    if (!text) return;
+    await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, dueDate, category })
+    });
+    loadTasks();
+  }
+
+  async function toggle(id) {
+    await fetch(`${API_URL}/${id}`, { method: 'PUT' });
+    loadTasks();
+  }
+
+  async function remove(id) {
+    await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+    loadTasks();
+  }
+
+  window.onload = loadTasks;
+</script>
+</body>
+</html>
