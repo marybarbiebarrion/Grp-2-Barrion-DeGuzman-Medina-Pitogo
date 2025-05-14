@@ -25,3 +25,18 @@ In the root directory (where `docker-compose.yml` is located), run:
 
 ```bash
 docker-compose up --build
+
+### Access the Application
+
+Frontend (Web Interface): [http://localhost:8080]
+Backend (Flask API): [http://localhost:5000]
+
+---
+
+## How to Stop the Application
+
+To stop the running containers, press CTRL + C in the terminal.
+To remove all running containers and clean up:
+
+```bash
+docker-compose down
