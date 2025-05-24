@@ -81,6 +81,7 @@ docker push adriandeguzman/todo-frontend:latest
 
 ```bash
 kubectl apply -f kubernetes-manifests/
+```
 
 ---
 
@@ -93,7 +94,7 @@ Check pod status with:
 
 ```bash
 kubectl get pods
-
+```
 
 ---
 
@@ -108,6 +109,7 @@ To verify the services, run:
 
 ```bash
 kubectl get services
+```
 
 ---
 
@@ -124,6 +126,7 @@ kubectl get services
 
 ```bash
 kubectl get ingress
+```
 
 ---
 
@@ -135,6 +138,7 @@ kubectl get ingress
 
 ```bash
 kubectl get hpa
+```
 
 ---
 
