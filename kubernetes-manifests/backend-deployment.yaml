@@ -13,28 +13,26 @@ spec:
         app: todo-backend
     spec:
       containers:
-        - name: backend
-          image: adriandeguzman/todo-backend:latest
-          ports:
-            - containerPort: 5000
-          volumeMounts:
-            - name: task-storage
-              mountPath: /app/tasks.db
-              subPath: tasks.db
+      - name: todo-backend
+        image: YOUR_DOCKERHUB_USERNAME/todo-backend
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - name: task-db
+          mountPath: /app
       volumes:
-        - name: task-storage
-          persistentVolumeClaim:
-            claimName: task-pvc
+      - name: task-db
+        persistentVolumeClaim:
+          claimName: backend-pvc
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-service
+  name: todo-backend
 spec:
   selector:
     app: todo-backend
   ports:
-    - protocol: TCP
-      port: 5000
-      targetPort: 5000
-  type: NodePort
+  - port: 5000
+    targetPort: 5000
+  clusterIP: ClusterIP

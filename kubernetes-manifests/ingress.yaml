@@ -3,22 +3,22 @@ kind: Ingress
 metadata:
   name: todo-ingress
   annotations:
-    kubernetes.io/ingress.class: "gce-internal"
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - http:
       paths:
-      - path: /api
-        pathType: Prefix
-        backend:
-          service:
-            name: backend-service
-            port:
-              number: 5000
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: frontend-service
+            name: todo-frontend
             port:
               number: 80
+      - path: /tasks
+        pathType: Prefix
+        backend:
+          service:
+            name: todo-backend
+            port:
+              number: 5000
