@@ -1,9 +1,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: todo-ingress
+  name: todo-app-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "gce"
 spec:
   rules:
   - http:
@@ -12,13 +12,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: todo-frontend
+            name: frontend-service
             port:
               number: 80
-      - path: /tasks
-        pathType: Prefix
-        backend:
-          service:
-            name: todo-backend
-            port:
-              number: 5000

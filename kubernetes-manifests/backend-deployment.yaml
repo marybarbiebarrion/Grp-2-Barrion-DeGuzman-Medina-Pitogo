@@ -1,38 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: todo-backend
+  name: backend-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: todo-backend
+      app: backend
   template:
     metadata:
       labels:
-        app: todo-backend
+        app: backend
     spec:
       containers:
-      - name: todo-backend
-        image: YOUR_DOCKERHUB_USERNAME/todo-backend
+      - name: backend
+        image: adriandeguzman/todo-backend:latest
         ports:
         - containerPort: 5000
         volumeMounts:
-        - name: task-db
+        - name: sqlite-storage
           mountPath: /app
       volumes:
-      - name: task-db
+      - name: sqlite-storage
         persistentVolumeClaim:
           claimName: backend-pvc
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: todo-backend
-spec:
-  selector:
-    app: todo-backend
-  ports:
-  - port: 5000
-    targetPort: 5000
-  clusterIP: ClusterIP
