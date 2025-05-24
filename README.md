@@ -69,6 +69,7 @@ docker push adriandeguzman/todo-backend:latest
 # Build frontend image
 docker build -t adriandeguzman/todo-frontend:latest ./frontend
 docker push adriandeguzman/todo-frontend:latest
+```
 
 ---
 
